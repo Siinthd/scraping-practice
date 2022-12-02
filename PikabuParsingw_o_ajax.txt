@@ -1,0 +1,62 @@
+import requests
+from bs4 import BeautifulSoup
+import lxml,json
+urls = 'https://pikabu.ru/'
+header = {
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+        }
+        
+        
+def get_data(url):
+    req = requests.get(url,headers=header).text
+    soup = BeautifulSoup(req,"lxml")
+    articles = soup.find_all('article', class_="story")
+    proj_urls = []
+    
+    for i in articles:
+        if i.attrs['data-author-name'] not in 'specials':
+            url = i.find(class_='story__title').find('a').get('href')
+            if '?' not in url:
+                proj_urls.append(url)
+    result = []
+    
+    for i in proj_urls:
+        url_name = i.split('/')[-1].replace('otvet_na_post_','')
+        story_id = url_name.split('_')[-1]
+        req_s = requests.get(i,headers=header).text
+        with open(f'data_capture/{url_name}.html','w',encoding='utf-16') as file:
+            file.write(req)
+            print(f'data_capture/{url_name}.html saved.' )
+            soup = BeautifulSoup(req_s,"lxml")
+            articles_block = soup.find(attrs= {"data-story-id": story_id})
+            if articles_block is not None:
+                tags = []
+                try:
+                    articles_name = articles_block.find('span',class_='story__title-link').text
+                except:
+                    articles_name = "No title"
+                try:
+                    article_username = articles_block.find('article',class_="story").get('data-author-name')
+                except:
+                    article_username = "NoName"
+                try:
+                    tag = articles_block.find('div',class_='story__tags')
+                except:
+                    tag= ["NoName"]
+                for j in tag:
+                    tags.append(j.text.replace('\n','').replace(' ',''))
+                tags = list(filter(None, tags))
+                result.append(
+                                {
+                                    "Название поста":articles_name,
+                                    "Никнейм":article_username,
+                                    "Тэги":tags,
+                                    "Ссылка":i
+                                }
+                            )
+        with open(f'data_capture/stories.json','w',encoding='utf-16') as jsonfile:
+            json.dump(result,jsonfile,indent=4,ensure_ascii = False)
+                    
+get_data(urls)
+    

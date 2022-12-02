@@ -12,6 +12,12 @@ build/
 develop-eggs/
 dist/
 downloads/
+fonts/
+images/
+music/
+static/
+templates/
+data_capture/
 eggs/
 .eggs/
 lib/
