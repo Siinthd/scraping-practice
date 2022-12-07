@@ -5,16 +5,12 @@ import os
 import json
 import time
 
-
 from aiogram import Bot,Dispatcher,executor,types
 from aiogram.dispatcher.filters import Text
 from aiogram.utils.markdown import hbold,hlink
-
 from fake_useragent import UserAgent
 
 ua = UserAgent()
-
-
 tbot = Bot(token = os.getenv('tgTOKEN'),parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(tbot)
 
@@ -39,7 +35,6 @@ async def start(message: types.Message):
     keyb.add(*start_button)
     await message.answer("показать телефоны Xiaomi с 128 Гб памяти и дешевле 20к рублей?",reply_markup = keyb)
 
-
 @dp.message_handler(Text(equals='телефоны'))
 async def moscow_city(message: types.Message):
     await message.answer("ждите")
@@ -48,7 +43,6 @@ async def moscow_city(message: types.Message):
        jfile = json.load(file)
     for i in jfile:
         await message.answer(f"{hlink(i.get('Name'), i.get('link'))}\n {hbold(i.get('average Price'))}🔥🔥🔥")
-
 
 def collect_data():
     collection = []
@@ -70,9 +64,6 @@ def collect_data():
                 collection.append({'Name':Name,'average Price':avgPrice,'link':link})
     with open('data_capture/mobiles.json','w',encoding='utf-16') as file:
         json.dump(collection,file,indent=4,ensure_ascii=False)
-
-
-
 
 def main():
     pass
