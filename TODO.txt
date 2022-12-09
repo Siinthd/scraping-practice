@@ -1,3 +1,3 @@
-1 Парсинг сайта + Telegram бот на aiogram  Requests beautifulsoup aiogram
-2 Парсинг сайта + Telegram бот на aiogram  Requests beautifulsoup aiogram
-Telegram bot на Python + aiogram  Прогноз погоды в любом городе  API погоды  Парсинг JSON
+Программы на Python  Как отправить письмо с вложением на почту с помощью Python  Email рассылка
+Выполняем тестовое задание на Junior Python разработчика   PDF в MP3
+Django  Выполняем тестовое задание на Junior Python 
