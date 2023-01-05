@@ -16,12 +16,15 @@ downloads/
 fonts/
 images/
 music/
+data/
 sounds/
 static/
 templates/
 data_capture/
 attachment/
 eggs/
+practice/
+tensorvenv/
 .eggs/
 lib/
 lib64/
@@ -55,6 +58,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
+*.key
 *.py,cover
 .hypothesis/
 .pytest_cache/
